@@ -1,72 +1,72 @@
 const asyncHandler= require('express-async-handler')
 
-const Course = require('../model/courseModel')
-// @desc Get Courses
+const Topic = require('../model/topicModel')
+// @desc Get Topic
 // @route GET
 // @access public
 
-const getCourses= asyncHandler( async(req,res)=>{
-    const course = await Course.find()
-    res.status(200).json(course)
+const getTopic = asyncHandler( async(req,res)=>{
+    const topic = await Topic.find()
+    res.status(200).json(topic)
 })
 
 
-// @desc Post Courses
+// @desc Post Topic
 // @route POST
 // @access public
 
-const setCourses=asyncHandler( async(req,res)=>{
+const setTopic = asyncHandler( async(req,res)=>{
     if (!req.body.name || !req.body.price || !req.body.description){
         res.status(400)
         throw new Error("Please add a field")
     }
 
-    const course = await Course.create({
+    const topic = await Topic.create({
         name : req.body.name,
         price : req.body.price,
         description : req.body.description,
         discount : req.body.discount
     })
-    res.status(200).json(course)
+    res.status(200).json(topic)
     // throw new Error('Please add a text ')
 
 })
 
-// @desc Update Courses
+// @desc Update Topic
 // @route Put
 // @access public
 
-const updateCourses=asyncHandler( async(req,res)=>{
-    const course = await Course.findById(req.params.id)
-    if (!course){
+const updateTopic = asyncHandler( async(req,res)=>{
+    const topic = await Topic.findById(req.params.id)
+    if (!topic){
         res.status(400)
         throw new Error('Goal not found')
     }
-    const updatedCourse = await Course.findOneAndUpdate(
+    const updatedTopic = await Topic.findOneAndUpdate(
         req.params.id,
         req.body,
         {
             new:true
         })
-    res.status(200).json(updatedCourses)
+    res.status(200).json(updatedTopic)
 })
-// @desc Delete Courses
+// @desc Delete Topic
 // @route DELETE
 // @access public
 
-const deleteCourses=asyncHandler( async(req,res)=>{
-    const course = await Course.findById(req.params.id)
-    if (!course){
+const deleteTopic = asyncHandler( async(req,res)=>{
+    const topic = await Topic.findById(req.params.id)
+    if (!topic){
         res.status(400)
         throw new Error('Goal not found')
     }
-    await course.remove()
+    await topic.remove()
     res.status(200).json({id : req.params.id})
 })
 
 module.exports = {
-    getCourses,
-    updateCourses,
-    deleteCourses,
-    setCourses
+    getTopic,
+    updateTopic,
+    deleteTopic,
+    setTopic
 }
